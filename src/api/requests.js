@@ -8,3 +8,5 @@ const requests = {
   fetchRomanceMovies: "/discover/movie?with_genres=10749",
   fetchDocumentaries: "/discover/movie?with_genres=99",
 };
+
+export default requests;
