@@ -69,17 +69,16 @@ const Banner = () => {
     );
   } else {
     return (
-      <Container>
-        <HomeContainer>
-          <Iframe
-            src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=0&autoplay=1&loop=1&mute=1`}
-            width="640"
-            height="360"
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-          />
-        </HomeContainer>
-      </Container>
+      <>
+        <Container>
+          <HomeContainer>
+            <Iframe
+              src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=0&autoplay=1&loop=1&mute=1`}
+            />
+          </HomeContainer>
+        </Container>
+        <button onClick={() => setIsClicked(false)}>X</button>
+      </>
     );
   }
 };
