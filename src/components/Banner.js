@@ -27,7 +27,7 @@ const Banner = () => {
         append_to_response: "videos",
       },
     });
-    console.log("movieDetail", movieDetail);
+
     setMovie(movieDetail);
   };
 
