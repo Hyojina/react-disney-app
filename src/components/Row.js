@@ -4,6 +4,7 @@ import "./Row.css";
 
 const Row = ({ title, id, fetchUrl }) => {
   const [movies, setMovies] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -15,6 +16,10 @@ const Row = ({ title, id, fetchUrl }) => {
     // return 부분은 함수가 사라질때 정리해줄 게 없다면 필요없는 부분입니다.
     // ex: 이벤트 리스너, 셋 인터벌 등
   }, [fetchUrl]);
+
+  const handleClick = (movie) => {
+    setModalOpen(true);
+  };
 
   return (
     <div>
@@ -35,6 +40,7 @@ const Row = ({ title, id, fetchUrl }) => {
               className="row__poster"
               src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
               alt={movie.name}
+              onClick={() => handleClick(movie)}
             />
           ))}
         </div>
@@ -47,6 +53,7 @@ const Row = ({ title, id, fetchUrl }) => {
           <span className="arrow">{">"}</span>
         </div>
       </div>
+      {modalOpen ? null : null}
     </div>
   );
 };
