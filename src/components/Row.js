@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
+import MovieModal from "./MovieModal";
 import "./Row.css";
 
 const Row = ({ title, id, fetchUrl }) => {
   const [movies, setMovies] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [movieSelected, setMovieSelected] = useState({});
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -19,6 +21,7 @@ const Row = ({ title, id, fetchUrl }) => {
 
   const handleClick = (movie) => {
     setModalOpen(true);
+    setMovieSelected(movie);
   };
 
   return (
@@ -53,7 +56,10 @@ const Row = ({ title, id, fetchUrl }) => {
           <span className="arrow">{">"}</span>
         </div>
       </div>
-      {modalOpen ? null : null}
+      {/* movie={movieSelected}  이런 방법으로 prop을 내려줘도 됩니다.*/}
+      {modalOpen ? (
+        <MovieModal {...movieSelected} setModalOpen={setModalOpen} />
+      ) : null}
     </div>
   );
 };
