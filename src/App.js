@@ -1,52 +1,33 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
-import styled from "styled-components";
-import Banner from "./components/Banner";
-import Category from "./components/Category";
-import Row from "./components/Row";
-import requests from "./api/requests";
+import LoginPage from "./pages/LoginPage";
+import MainPage from "./pages/Mainpage";
+import SearchPage from "./pages/SearchPage";
+import DetailPage from "./pages/DetailPage";
+
+const Layout = () => {
+  return (
+    <div>
+      <Nav />
+      {/* 중첩 문법을 사용할 컴포넌트는 Outlet에 넣어줍니다 */}
+      <Outlet />
+    </div>
+  );
+};
 
 function App() {
   return (
-    <Container>
-      <Nav />
-      <Banner />
-      <Category />
-      {/* 하나의 컴포넌트에 데이터를 각각 내려줍니다 */}
-      <Row title="Trending Now" id="TN" fetchUrl={requests.fetchTrending} />
-      <Row title="Top Rated" id="TR" fetchUrl={requests.fetchTopRated} />
-      <Row
-        title="Action Movies"
-        id="AM"
-        fetchUrl={requests.fetchActionMovies}
-      />
-      <Row
-        title="Comedy Movies"
-        id="CM"
-        fetchUrl={requests.fetchComedyMovies}
-      />
-    </Container>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* 이 부분이 중첩 문법이 사용된 컴포넌트들로, Outlet 컴포넌트 안에 들어가게 됩니다. */}
+        <Route index element={<LoginPage />} />
+        <Route path="main" element={<MainPage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path=":movieId" element={<DetailPage />} />
+      </Route>
+    </Routes>
   );
 }
-
-const Container = styled.main`
-  position: relative;
-  min-height: calc(100vh - 250px);
-  overflow-x: hidden;
-  display: block;
-  top: 72px;
-  padding: 0 calc(3.5vw + 5px);
-
-  &:after {
-    background: url("/images/home-background.png") center center / cover
-      no-repeat fixed;
-    content: "";
-    position: absolute;
-    inset: 0px;
-    opacity: 1;
-    z-index: -1;
-  }
-`;
 
 export default App;
