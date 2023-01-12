@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Nav = () => {
   const [show, setShow] = useState(false);
+  // navigate 함수 생성은 상단에서 해주어야 합니다.
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
 
   // 아래와 동일한 코드
   // const location = useLocation();
-  // console.log(location.pathname);
+  // console.log(location);
   const { pathname } = useLocation();
   console.log(pathname);
 
@@ -26,6 +29,11 @@ const Nav = () => {
     };
   }, []);
 
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+    navigate(`/search?q=${e.target.value}`);
+  };
+
   return (
     <NavWrapper show={show}>
       <Logo>
@@ -35,7 +43,7 @@ const Nav = () => {
           onClick={() => (window.location.href = "/")}
         />
       </Logo>
-      {pathname === "/" ? <Login></Login> : <Input />}
+      {pathname === "/" ? <Login></Login> : <Input onChange={handleChange} />}
     </NavWrapper>
   );
 };
