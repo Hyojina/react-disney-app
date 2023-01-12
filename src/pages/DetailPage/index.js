@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 
 const DetailPage = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState({
-    backdrop_path: "/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg",
-  });
+  const [movie, setMovie] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`movie/${movieId}`);
-      setMovie(response.data);
+      try {
+        const response = await axios.get(`movie/${movieId}`);
+        setMovie(response.data);
+      } catch (error) {
+        console.log(error);
+        // 만약 상세 정보가 없으면 이전 페이지로 돌려보내기
+        navigate(-1);
+      }
     }
     fetchData();
-    console.log(movie);
   }, [movieId]);
 
   return (
