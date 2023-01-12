@@ -2,6 +2,7 @@ import axios from "../../api/axios";
 import "./SearchPage.css";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const SearchPage = () => {
   // 인스턴스 객체가 됩니다.
   let query = useQuery();
   // console.log(query.toString());
-  const searchTerm = query.get("q");
+  const searchTerm = useDebounce(query.get("q"), 1000);
 
   useEffect(() => {
     if (searchTerm) {
