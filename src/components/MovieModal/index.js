@@ -1,5 +1,6 @@
 // index.js는 메인이 되는 파일이기 때문에 다른 파일에서 import 시, 폴더 이름까지만 넣어주면 된다.
-import React from "react";
+import React, { useRef } from "react";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import "./MovieModal.css";
 
 const MovieModal = ({
@@ -12,10 +13,14 @@ const MovieModal = ({
   vote_average,
   setModalOpen,
 }) => {
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => setModalOpen(false));
+
   return (
     <div className="presentation">
       <div className="wrapper-modal">
-        <div className="modal">
+        <div className="modal" ref={ref}>
           <span className="modal-close" onClick={() => setModalOpen(false)}>
             X
           </span>
